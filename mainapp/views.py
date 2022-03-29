@@ -1,7 +1,16 @@
 from django.shortcuts import render
+from mainapp.models import ProductCategories, Product
 import json
+import os
 
 # Create your views here.
+
+MODULE_DIR = os.path.dirname(__file__)
+
+
+def read_file(name):
+    file_path = os.path.join(MODULE_DIR, name)
+    return json.load(open(file_path, encoding='utf-8'))
 
 
 def index(request):
@@ -15,16 +24,11 @@ def index(request):
 
 def products(request):
 
-    categories = [
-        {'name': 'Новинки'},
-        {'name': 'Одежда'},
-        {'name': 'Обувь'},
-        {'name': 'Аксессуары'},
-        {'name': 'Подарки'},
-    ]
+    categories = ProductCategories.objects.all()
+    product_cards = Product.objects.all()
 
-    with open('mainapp/templates/mainapp/fixtures/product_cards.json', 'r', encoding='utf-8') as file:
-        product_cards = json.load(file)
+    # categories = read_file('fixtures/categories.json')
+    # product_cards = read_file('fixtures/product_cards.json')
 
     content = {
         'title': 'geekshop - каталог',
