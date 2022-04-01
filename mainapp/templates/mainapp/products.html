@@ -62,14 +62,14 @@
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
                         <a href="#">
-                            <img class="card-img-top" src="{% static '' %}{{ card.img }}" alt="">
+                            <img class="card-img-top" src="{{ card.image.url }}" alt="">
                         </a>
                         <div class="card-body">
                             <h4 class="card-title">
-                                <a href="#">{{ card.title }}</a>
+                                <a href="#">{{ card.name }}</a>
                             </h4>
                             <h5>{{ card.price }} руб.</h5>
-                            <p class="card-text">{{ card.description }}</p>
+                            <p class="card-text">{{ card.descriptions }}</p>
                         </div>
                         <div class="card-footer text-center">
                             <button type="button" class="btn btn-outline-success">Отправить в корзину</button>
