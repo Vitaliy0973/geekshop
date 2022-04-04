@@ -1,16 +1,19 @@
-
 import json
 from django.core.management.base import BaseCommand
+from authapp.models import User
 from mainapp.models import ProductCategories, Product
 
 
 def load_from_json(file_name):
-    with open(file_name, 'r', encoding='utf-8') as infile:
+    with open(file_name, mode='r', encoding='utf-8') as infile:
         return json.load(infile)
 
 
 class Command(BaseCommand):
-    def hangle(self, *args, **options):
+    def handle(self, *args, **options):
+
+        User.objects.create_superuser(
+            username='vitaliy', email='admin@mail.ru', password='1')
 
         categories = load_from_json('mainapp/fixtures/categories.json')
 
@@ -25,9 +28,9 @@ class Command(BaseCommand):
 
         Product.objects.all().delete()
         for product in products:
-            prod = products.get('fields')
+            prod = product.get('fields')
             category = prod.get('category')
             _category = ProductCategories.objects.get(id=category)
             prod['category'] = _category
             new_category = Product(**prod)
-            new_category.seve()
+            new_category.save()
