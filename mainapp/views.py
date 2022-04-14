@@ -25,15 +25,15 @@ def index(request):
 def products(request):
 
     categories = ProductCategories.objects.all()
-    product_cards = Product.objects.all()
+    products = Product.objects.all()
 
     # categories = read_file('fixtures/categories.json')
-    # product_cards = read_file('fixtures/product_cards.json')
+    # products = read_file('fixtures/products.json')
 
     content = {
         'title': 'geekshop - каталог',
         'categories': categories,
-        'product_cards': product_cards,
+        'products': products,
     }
 
     return render(request, 'mainapp/products.html', content)

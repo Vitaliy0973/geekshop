@@ -1,9 +1,11 @@
 from multiprocessing import context
 from django.shortcuts import render
-from django.contrib import auth
+from django.contrib import auth, messages
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from authapp.forms import UserLoginForm, UserRegisterForm
+from authapp.forms import UserLoginForm, UserRegisterForm, UserProfileForm
+from basket.models import Basket
 
 # Create your views here.
 
@@ -39,6 +41,7 @@ def register(request):
         form = UserRegisterForm(data=request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Вы успешно зарегестрировались')
             return HttpResponseRedirect(reverse('authapp:login'))
         else:
             print(form.errors)
@@ -50,6 +53,27 @@ def register(request):
         'form': form
     }
     return render(request, 'authapp/register.html', context)
+
+
+@login_required
+def profile(request):
+
+    if request.method == 'POST':
+        form = UserProfileForm(instance=request.user,
+                               data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+        else:
+            print(form.errors)
+
+    user_select = request.user
+
+    context = {
+        'title': 'Geekshop | Профиль',
+        'form': UserProfileForm(instance=user_select),
+        'baskets': Basket.objects.filter(user=user_select),
+    }
+    return render(request, 'authapp/profile.html', context)
 
 
 def logout(request):
