@@ -16,12 +16,17 @@
                     </div>
                 </div>
             </div>
+
+            {% if product_select.image %}
             <div class="col-lg-6" style="text-align: center;">
-                <img src="{{product_select.image.url}}" alt="" width="150">
+                <img src="{{ product_select.image.url }}" alt="" width="150">
             </div>
+            {% endif %}
+
             <div class="form-row mb-4">
                 <div class="col-lg-12">
                     <div class="custom-file">
+                        {% if not product_select.image %}<p>Выберите изображение:</p>{% endif %}
                         {{ form.image }}
                         <!-- <label class="custom-file-label" for="form.image.id_for_label">Выберите изображение</label> -->
                     </div>
