@@ -1,5 +1,5 @@
 from django.urls import path
-from authapp.views import LoginGBView, ProfileUpdateView, RegisterView, Logout
+from authapp.views import LoginGBView, ProfileFormView, RegisterView, Logout
 
 
 app_name = 'authapp'
@@ -15,7 +15,7 @@ urlpatterns = [
     path('logout/', Logout.as_view(), name='logout'),
 
     # path('profile/', profile, name='profile'),
-    path('profile/', ProfileUpdateView.as_view(), name='profile'),
+    path('profile/', ProfileFormView.as_view(), name='profile'),
 
     path('verify/<str:email>/<str:activate_key>/',
          RegisterView.verify, name='verify')

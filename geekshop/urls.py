@@ -30,6 +30,7 @@ urlpatterns = [
     path('authapp/', include('authapp.urls', namespace='authapp')),
     path('basket/', include('basket.urls', namespace='basket')),
     path('adminapp/', include('adminapp.urls', namespace='adminapp')),
+    path('', include('social_django.urls', namespace='social'))
 
 ]
 
