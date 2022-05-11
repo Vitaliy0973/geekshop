@@ -1,4 +1,3 @@
-# from importlib.resources import path
 from django.urls import path
 from mainapp.views import ProductDetail, products
 

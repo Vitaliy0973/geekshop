@@ -92,7 +92,7 @@ class UserProfileEditForm(forms.ModelForm):
         super(UserProfileEditForm, self).__init__(*args, **kwargs)
 
         for field_name, field in self.fields.items():
-            if field_name != 'gender':
+            if field_name != 'gender' and field_name != 'langs':
                 field.widget.attrs['class'] = 'form-control py-4'
             else:
                 field.widget.attrs['class'] = 'form-control'
