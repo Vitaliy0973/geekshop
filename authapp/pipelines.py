@@ -39,6 +39,7 @@ def save_user_profile(backend, user, response, *args, **kwargs):
     if age < 18:
         user.delete()
         raise AuthForbidden('social_core.backends.vk.VKOAuth2')
+    user.age = age
 
     if data['personal']['langs']:
         user.userprofile.langs = data['personal']['langs'][0]
@@ -54,5 +55,4 @@ def save_user_profile(backend, user, response, *args, **kwargs):
             file.write(photo.content)
         user.image = path_photo
 
-    user.age = age
     user.save()
