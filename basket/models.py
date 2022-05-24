@@ -5,8 +5,20 @@ from mainapp.models import Product
 
 # Create your models here.
 
+# # Вариант с менеджером
+# class BasketQuerySet(models.QuerySet):
+
+#     def delete(self, *args, **kwargs):
+#         for item in self:
+#             item.product.quantity += item.quantity
+#             item.product.save()
+#         super(Basket, self).delete(*args, **kwargs)
+
 
 class Basket(models.Model):
+    # # Вариант с менеджером
+    # objects = BasketQuerySet.as_manager()
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=0)
@@ -19,10 +31,32 @@ class Basket(models.Model):
     def sum(self):
         return self.quantity * self.product.price
 
+    def get_basket(self):
+        return Basket.objects.filter(user=self.user)
+
     def total_sum(self):
-        baskets = Basket.objects.filter(user=self.user)
+        baskets = self.get_basket()
         return sum(basket.sum() for basket in baskets)
 
     def total_quantity(self):
-        baskets = Basket.objects.filter(user=self.user)
+        baskets = self.get_basket()
         return sum(basket.quantity for basket in baskets)
+
+    # # Вариант с менеджером
+    # def save(self, *args, **kwargs):
+    #     if self.pk:
+    #         item = self.get_item(int(self.pk))
+    #         self.product.quantity -= self.quantity - item
+    #     else:
+    #         self.product.quantity -= self.quantity
+    #     self.product.save()
+    #     super(Basket, self).save(*args, **kwargs)
+
+    # def delete(self, *args, **kwargs):
+    #     self.product.quantity += self.quantity
+    #     self.save()
+    #     super(Basket, self).delete(*args, **kwargs)
+
+    @staticmethod
+    def get_item(pk):
+        return Basket.objects.get(pk=pk).quantity
