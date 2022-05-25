@@ -1,6 +1,6 @@
 from email.mime import image
 from operator import mod
-from tkinter import CASCADE
+# from tkinter import CASCADE
 from unicodedata import category, name
 '''Models for product and category'''
 

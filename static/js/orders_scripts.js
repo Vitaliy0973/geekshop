@@ -88,6 +88,26 @@ window.onload = function () {
         orderSummaryUpdate(price_arr[orderitem_num], delta_quantity)
     }
 
+    $(document).on('change', '.order_form select', function () {
+        // $('.order_form select').change(function () {
+        let target = event.target
+        orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-product', ''));
+        let orderitem_product_pk = target.options[target.selectedIndex].value;
+
+        if (orderitem_product_pk) {
+            $.ajax({
+                url: '/ordersapp/product/' + orderitem_product_pk + '/price/',
+                success: function (data) {
+                    let price_html = '<span class="orderitems-' + orderitem_num + '-price">'
+                        + data.price.toString().replace('.', ',') + ' руб</span>';
+
+                    let current_tr = $('.order_from table').find('tr:eq(' + (orderitem_num + 1) + ')');
+
+                    current_tr.find('td:eq(2)').html(price_html);
+                }
+            })
+        }
+    })
 }
 
 // onchange
