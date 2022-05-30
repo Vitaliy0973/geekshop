@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-a9b@7amvhwf2bk=)+$k=%^)ne)ilakzjo6vhptm-$p%h&#nd8^
 load_dotenv(BASE_DIR / '.env')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -98,7 +98,7 @@ WSGI_APPLICATION = 'geekshop.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-SERVER = True
+SERVER = False
 
 if SERVER:
     DATABASES = {
